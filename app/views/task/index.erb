@@ -1,0 +1,69 @@
+
+<header class="container">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      Lista de tareas
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <section id="new_task">
+      <h4>Ingresar nueva tarea</h4>
+      <form action="/task/new" method="post" class="form-inline">
+        <div class="form-group">
+          <input type="text" class="form-control" name="task">
+        </div>
+        <button type="submit" class="btn btn-task">
+          Guardar tarea
+        </button>
+      </form>
+  </section>
+
+  <section id="task_list">
+    <% if @flash %>
+    <div class="alert alert-<%= @flash[:type] %> alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%= @flash[:message] %>
+    </div>
+    <% end %>
+    
+    <% unless @tasks.empty? %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong>Tareas</strong></div>
+        <table class="table">
+          <tr>
+            <th class="col-md-2"><strong>Estado</strong></th>
+            <th class="col-md-8"><strong>Descripción</strong></th>
+          </tr> 
+          <% @tasks.each do |task| %>
+            <tr>
+              <td class="col-md-2">
+              <% if task["done"]%>
+                <span class="glyphicon glyphicon-ok"></span>
+              <% else %>
+                  <form class="form-inline" action="/task/<%= task["id"] %>/done" method="post">
+                    <input type="hidden" name="_method" value="patch">
+                    <button type="submit" class="btn btn-default">
+                      <span class="glyphicon glyphicon-unchecked"></span> Lista
+                    </button>
+                  </form>                             
+              <% end %>   
+              </td>
+              <td class="col-md-8"><%= task["title"] %></td>
+              <td class="col-md-2">
+                <form class="form-inline" action="/task/<%= task["id"] %>/delete" method="post">
+                  <input type="hidden" name="_method" value="delete">
+                  <button type="submit" class="btn btn-danger">
+                    Eliminar
+                  </button>
+                </form> 
+              </td>    
+            </tr>   
+          <% end %>
+        </table>           
+    </div>
+    <% end %> 
+  </section>
+</div>
+

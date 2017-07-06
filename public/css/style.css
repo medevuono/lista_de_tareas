@@ -1,0 +1,19 @@
+body {
+  background-color: #F1F6F8;
+}
+
+header {
+  padding: 10px 0; 
+}
+
+header div {
+  color: whitesmoke;
+  font-weight: bold;
+  font-size: 24px;
+  background-color: #6A759B;
+  border-radius: 3px;
+}
+
+#task_list {
+  padding: 50px 0;
+}
